@@ -16,15 +16,7 @@ namespace Blog.Application.Services
 
 
         public async Task CreateAsync(PostRequestDto dto)
-        {
-            dto.Validate();
-
-            var invalidDto = dto.Invalid;
-            if(invalidDto)
-            {
-                _notificationContext.AddNotifications(dto.Notifications);
-                return;
-            }
+        {         
             
             await _writeRepository.InsertOneAsync(dto);
         }

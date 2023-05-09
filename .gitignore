@@ -29,3 +29,7 @@
 /Blog.Shared/bin/Release/net6.0
 /Blog.Test/bin/Release/net6.0/cs/Microsoft.TestPlatform.CommunicationUtilities.resources.dll
 /Blog.Test/bin/Release/net6.0
+/Blog.Api/Properties/PublishProfiles
+/Blog.Api/Properties/ServiceDependencies
+/Blog.Api/Properties/serviceDependencies.blog-api-prd - Zip Deploy1.json
+/Blog.Api/Properties
