@@ -1,0 +1,44 @@
+name: Publish to Azure Web App
+
+env:
+    AZURE_WEBAPP_NAME: blog-api-prd  
+    AZURE_WEBAPP_PACKAGE_PATH: '.'     
+    DOTNET_VERSION: '6.0.x'                 
+
+on: 
+    workflow_dispatch:
+    push:
+        branches: 
+            - master
+jobs: 
+    build: 
+        runs-on: ubuntu-latest
+
+        steps:           
+           - uses: actions/checkout@v3
+
+           - name: Set up .NET
+             uses: actions/setup-dotnet@v3
+             with: 
+                dotnet-version: ${{env.DOTNET_VERSION}}
+
+           - name: Restore Packages    
+             run: dotnet restore
+
+           - name: Build App
+             run: dotnet build -c Release --no-restore  
+
+           - name: Run Automated Tests
+             run:  dotnet test -c Release --no-build
+             
+           - name: Dotnet Publish
+             run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp           
+    
+           - name: Deploy to Azure
+             uses: azure/webapps-deploy@v2
+             with: 
+                app-name: ${{env.AZURE_WEBAPP_NAME}}
+                publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+                package: ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
+                    
+
