@@ -48,30 +48,24 @@ namespace Blog.Api
 
         public void Configure(WebApplication app, IWebHostEnvironment environment)
         {
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-                app.UseCors("ClientPermission");
-            }
 
             app.UseSwagger();
             app.UseSwaggerUI();
+
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
+            {               
+                app.UseCors("ClientPermission");
+            }
+
+       
             app.UseCors("ClientPermission");
             app.UseHttpsRedirection();
             app.UseRouting();
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Api Started");
-                });
-            endpoints.MapControllers();
-            });
+            app.MapControllers();
 
         }
     }

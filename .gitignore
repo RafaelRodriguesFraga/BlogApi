@@ -19,3 +19,13 @@
 /Blog.Shared/obj
 /Blog.Test/bin/Debug/net6.0
 /Blog.Test/obj
+/Blog.Api/bin/Release/net6.0
+/Blog.Application/bin/Release/net6.0
+/Blog.Domain/bin/Release/net6.0
+/Blog.Infra/bin/Release/net6.0
+/Blog.Infra.CrossCutting/bin/Release/net6.0/publish/runtimes/browser/lib/net6.0/System.Text.Encodings.Web.dll
+/Blog.Infra.CrossCutting/bin/Release/net6.0
+/Blog.Shared/bin/Release/net6.0/publish/runtimes/browser/lib/net6.0/System.Text.Encodings.Web.dll
+/Blog.Shared/bin/Release/net6.0
+/Blog.Test/bin/Release/net6.0/cs/Microsoft.TestPlatform.CommunicationUtilities.resources.dll
+/Blog.Test/bin/Release/net6.0
