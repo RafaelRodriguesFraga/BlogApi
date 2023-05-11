@@ -11,16 +11,7 @@ namespace Blog.Api
         public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
-            try
-            {
-                Configuration = configuration;
-            }
-            catch (Exception e)
-            {
-
-                Console.WriteLine(e.Message + e.StackTrace);
-            }
-           
+            Configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -32,18 +23,18 @@ namespace Blog.Api
 
                 x.IncludeXmlComments(xmlPath);
             });
-            //var allowedOrigins = Configuration.GetSection("AllowedOrigins").Value;
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy("ClientPermission", policy =>
-            //    {
-            //        policy
-            //        .AllowAnyHeader()
-            //        .AllowAnyMethod()
-            //        .WithOrigins(allowedOrigins.Split(";"))
-            //        .AllowCredentials();
-            //    });
-            //});
+            var allowedOrigins = Configuration.GetSection("AllowedOrigins").Value;
+            services.AddCors(options =>
+            {
+                options.AddPolicy("ClientPermission", policy =>
+                {
+                    policy
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .WithOrigins(allowedOrigins.Split(";"))
+                    .AllowCredentials();
+                });
+            });
 
             services.AddMongoDb(Configuration);
             services.AddControllers();
