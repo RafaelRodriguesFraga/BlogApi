@@ -1,20 +1,25 @@
 using Blog.Api;
 
-try
-{
-    var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
-    var startup = new Startup(builder.Configuration);
-    startup.ConfigureServices(builder.Services);
+builder.WebHost.UseUrls("https://localhost:5090");
 
-    var app = builder.Build();
-    startup.Configure(app, app.Environment);
+//if (builder.Environment.IsProduction())
+//{
 
-    app.Run();
+//    builder.WebHost.ConfigureKestrel(options =>
+//    {
+//        options.ListenAnyIP(5090);
+//        options.ListenAnyIP(5091);
+//    });
+//}
 
-}
-catch(Exception ex)
-{
-    Console.WriteLine(ex.Message + ex.StackTrace);
-}
 
+
+var startup = new Startup(builder.Configuration);
+startup.ConfigureServices(builder.Services);
+
+var app = builder.Build();
+startup.Configure(app, app.Environment);
+
+app.Run();

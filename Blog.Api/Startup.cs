@@ -23,18 +23,18 @@ namespace Blog.Api
 
                 x.IncludeXmlComments(xmlPath);
             });
-            var allowedOrigins = Configuration.GetSection("AllowedOrigins").Value;
-            services.AddCors(options =>
-            {
-                options.AddPolicy("ClientPermission", policy =>
-                {
-                    policy
-                    .AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .WithOrigins(allowedOrigins.Split(";"))
-                    .AllowCredentials();
-                });
-            });
+            //var allowedOrigins = Configuration.GetSection("AllowedOrigins").Value;
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("ClientPermission", policy =>
+            //    {
+            //        policy
+            //        .AllowAnyHeader()
+            //        .AllowAnyMethod()
+            //        .WithOrigins(allowedOrigins.Split(";"))
+            //        .AllowCredentials();
+            //    });
+            //});            
 
             services.AddMongoDb(Configuration);
             services.AddControllers();
@@ -57,7 +57,6 @@ namespace Blog.Api
             {               
                 app.UseCors("ClientPermission");
             }
-
        
             app.UseCors("ClientPermission");
             app.UseHttpsRedirection();
