@@ -11,7 +11,16 @@ namespace Blog.Api
         public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            try
+            {
+                Configuration = configuration;
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e.Message + e.StackTrace);
+            }
+           
         }
 
         public void ConfigureServices(IServiceCollection services)
