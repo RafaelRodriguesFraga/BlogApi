@@ -54,18 +54,14 @@ namespace Blog.Api
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
-            {               
-                app.UseCors("ClientPermission");
+            {
+                app.UseDeveloperExceptionPage();
             }
        
             app.UseCors("ClientPermission");
-            app.UseHttpsRedirection();
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.MapControllers();
-
         }
     }
 }
