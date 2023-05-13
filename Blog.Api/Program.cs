@@ -2,8 +2,6 @@ using Blog.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.UseUrls("http://localhost:6640");
-
 var startup = new Startup(builder.Configuration);
 startup.ConfigureServices(builder.Services);
 
