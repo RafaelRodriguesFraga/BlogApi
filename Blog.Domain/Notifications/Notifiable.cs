@@ -4,7 +4,7 @@ namespace Blog.Domain.Notifications
 {
     public abstract class Notifiable<T> where T : Notification
     {
-        private readonly List<T> _notifications;
+        protected readonly List<T> _notifications;
 
         protected Notifiable() => _notifications = new List<T>();
 
@@ -13,8 +13,7 @@ namespace Blog.Domain.Notifications
             return (T)Activator.CreateInstance(typeof(T), new object[] { key, message });
         }
 
-        [JsonIgnore]
-        public IReadOnlyCollection<T> Notifications => _notifications;
+        protected IReadOnlyCollection<T> Notifications => _notifications;
 
         public void AddNotification(string key, string message)
         {
@@ -47,10 +46,9 @@ namespace Blog.Domain.Notifications
             _notifications.Clear();
         }
 
-        [JsonIgnore]
-        public bool Valid => _notifications.Any() == false;
+     
+        protected bool Valid => _notifications.Any() == false;
 
-        [JsonIgnore]
-        public bool Invalid => !Valid;
+        protected bool Invalid => !Valid;
     }
 }
