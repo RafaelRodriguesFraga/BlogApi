@@ -64,9 +64,7 @@ namespace Blog.Domain.Entities
 
             var uploadResult = cloudinary.Upload(uploadParams);
 
-            var teste = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(340).Height(213).Crop("fill"));
-
-            var thumbnail = new Thumbnail(teste.ToString(), uploadResult.PublicId);
+            var thumbnail = new Thumbnail(uploadResult.SecureUrl.ToString(), uploadResult.PublicId);
 
             return thumbnail;
         }
