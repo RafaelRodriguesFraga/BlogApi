@@ -1,7 +1,7 @@
-﻿using Blog.Api.Controllers.Base;
-using Blog.Api.Controllers.Responses;
-using Blog.Application.Services;
+﻿using Blog.Application.Services;
 using Blog.Domain.Dtos;
+using Fraga.Components.Api.Base;
+using Fraga.Components.Api.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Api.Controllers
