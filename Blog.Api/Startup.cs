@@ -1,4 +1,4 @@
-﻿using Blog.Api.Controllers.Responses;
+﻿using Blog.Api.Responses;
 using Blog.Application.Pagination;
 using Blog.Domain.Notifications;
 using Blog.Infra.CrossCutting.IoC;
@@ -41,8 +41,8 @@ namespace Blog.Api
             services.AddRepositories();
             services.AddServices();
 
-            services.AddScoped<NotificationContext>();
             services.AddScoped<IResponseFactory, ResponseFactory>();
+            services.AddScoped<NotificationContext>();
             services.AddScoped(typeof(IPaginationResponse<>), typeof(PaginationResponse<>));
         }
 

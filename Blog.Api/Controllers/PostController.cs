@@ -1,7 +1,7 @@
-﻿using Blog.Application.Services;
+﻿using Blog.Api.Base;
+using Blog.Api.Responses;
+using Blog.Application.Services;
 using Blog.Domain.Dtos;
-using Fraga.Components.Api.Base;
-using Fraga.Components.Api.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Api.Controllers
@@ -30,6 +30,14 @@ namespace Blog.Api.Controllers
             await _postServiceApplication.CreateAsync(dto);
 
             return ResponseCreated();
-        }        
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllAsync([FromQuery] int currentPage, [FromQuery] int quantityPerPage)
+        {
+            var result = await _postServiceApplication.GetAllAsync(currentPage, quantityPerPage);
+
+            return ResponseOk(result);
+        }
     }
 }
