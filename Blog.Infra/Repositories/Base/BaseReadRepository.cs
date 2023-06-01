@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using Blog.Application.Pagination;
 using Blog.Domain.Repositories.Base;
 using Blog.Infra.DbSettings;
 using MongoDB.Driver;
@@ -52,8 +53,28 @@ namespace Blog.Infra.Repositories.Base
             var filter = Builders<TEntity>.Filter.Empty;
 
             return await _collection.Find(filter).ToListAsync();
-        }
 
+
+        }
+        public async Task<(IEnumerable<TEntity> result, int totalRecords)> FindAllPaginatedAsync(int page, int quantityPerPage)
+        {
+            var skip = page == 1 ? 0 : (page - 1) * quantityPerPage;
+
+            var filter = Builders<TEntity>.Filter.Empty;
+
+            var collection = _collection
+                 .Find(filter);                
+
+            var totalRecords = (int)collection.Count();
+
+            var result = await collection
+                .Skip(skip)
+                .Limit(quantityPerPage)
+                .ToListAsync();
+
+            return (result, totalRecords);
+
+        }
         public IEnumerable<TEntity> FindAll()
 
         {

@@ -13,5 +13,6 @@ namespace Blog.Domain.Repositories.Base
         Task<TEntity> FindByIdAsync(Guid id);
         IEnumerable<TEntity> FindAll();
         Task<IEnumerable<TEntity>> FindAllAsync();
+        Task<(IEnumerable<TEntity> result, int totalRecords)> FindAllPaginatedAsync(int page, int quantityPerPage);
     }
 }
