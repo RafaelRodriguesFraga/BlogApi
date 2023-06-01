@@ -14,6 +14,7 @@ namespace Blog.Infra.CrossCutting.IoC
             services.AddScoped(typeof(IBaseReadRepository<>), typeof(BaseReadRepository<>));
 
             services.AddScoped<IPostWriteRepository, PostWriteRepository>();
+            services.AddScoped<IPostReadRepository, PostReadRepository>();
 
             return services;
         }
