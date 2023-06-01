@@ -4,8 +4,9 @@
     {
         IEnumerable<TData> Data { get; set; }
         int CurrentPage { get; set; }
+        int QuantityPerPage { get; set; }
+        long TotalRecords { get; set; }
         int TotalPages { get; set; }
-        long TotalRecords { get; set; }  
 
 
     }
