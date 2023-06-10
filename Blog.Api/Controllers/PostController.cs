@@ -39,5 +39,13 @@ namespace Blog.Api.Controllers
 
             return ResponseOk(result);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync([FromRoute] Guid id)
+        {
+            await _postServiceApplication.DeleteOneAsync(id);
+
+            return CreateResponse();
+        }
     }
 }

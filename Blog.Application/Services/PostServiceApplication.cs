@@ -27,13 +27,25 @@ namespace Blog.Application.Services
         {         
             
             await _writeRepository.InsertOneAsync(dto);
-        }
+        }       
 
         public async Task<PaginationResponse<Post>> GetAllAsync(int currentPage, int quantityPerPage)
         {
             var (posts, totalRecords) = await _postReadRepository.FindAllPaginatedAsync(currentPage, quantityPerPage);
 
             return new PaginationResponse<Post>(currentPage, quantityPerPage, totalRecords, posts);
+        }
+
+        public async Task DeleteOneAsync(Guid id)
+        {
+            var post = await _postReadRepository.FindByIdAsync(id);
+            if(post is null)
+            {
+                _notificationContext.AddNotification("Error", "Post does not exist");
+                return;
+            }
+
+            await _writeRepository.DeleteByIdAsync(id);
         }
     }
 }
