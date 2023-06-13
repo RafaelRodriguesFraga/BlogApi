@@ -1,6 +1,7 @@
 ﻿using Blog.Api.Base;
 using Blog.Api.Responses;
 using Blog.Application.Services;
+using Blog.Application.ViewModels;
 using Blog.Domain.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,12 +26,24 @@ namespace Blog.Api.Controllers
         /// <response code="201">Returns Created if a post is succefully created</response>
         /// <response code="400">Returns BadRequest if there's any validation errors</response>
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromForm] PostRequestDto dto)
+        public async Task<IActionResult> CreateAsync(PostRequestDto dto)
         {
             await _postServiceApplication.CreateAsync(dto);
 
             return ResponseCreated();
         }
+
+        [HttpPost("upload-image")]
+        public async Task<IActionResult> UploadImageAsync([FromForm] ThumbnailRequestViewModel viewModel)
+        {
+            var result = await _postServiceApplication.UploadImage(viewModel.File);
+
+            return ResponseOk(result);
+        }
+
+
+
+
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync([FromQuery] int currentPage, [FromQuery] int quantityPerPage)
