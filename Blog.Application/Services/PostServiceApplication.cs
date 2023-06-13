@@ -6,6 +6,12 @@ using Blog.Domain.Dtos;
 using Blog.Domain.Entities;
 using Blog.Domain.Notifications;
 using Blog.Domain.Repositories;
+using CloudinaryDotNet.Actions;
+using CloudinaryDotNet;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Blog.Application.Services
 {
@@ -13,13 +19,16 @@ namespace Blog.Application.Services
     {
         private readonly IPostWriteRepository _writeRepository;
         private readonly IPostReadRepository _postReadRepository;
+        private readonly IConfiguration _configuration;
         public PostServiceApplication(
             NotificationContext notificationContext,
             IPostWriteRepository writeRepository,
-            IPostReadRepository postReadRepository) : base(notificationContext)
+            IPostReadRepository postReadRepository,
+            IConfiguration configuration) : base(notificationContext)
         {
             _writeRepository = writeRepository;
             _postReadRepository = postReadRepository;
+            _configuration = configuration;
         }
 
 
@@ -46,6 +55,29 @@ namespace Blog.Application.Services
             }
 
             await _writeRepository.DeleteByIdAsync(id);
+        }
+
+        public async Task<ThumbnailViewModel> UploadImage(IFormFile image)
+        {
+            var cloudName = _configuration.GetSection("CloudinarySettings:CloudName").Value;
+            var apiKey = _configuration.GetSection("CloudinarySettings:ApiKey").Value;
+            var apiSecret = _configuration.GetSection("CloudinarySettings:ApiSecret").Value;
+
+            Account account = new Account(cloudName, apiKey, apiSecret);              
+
+            Cloudinary cloudinary = new Cloudinary(account);
+
+            //Fazer o upload da imagem
+            var uploadParams = new ImageUploadParams()
+            {
+                File = new FileDescription(image.FileName, image.OpenReadStream())
+            };
+
+            var uploadResult = await cloudinary.UploadAsync(uploadParams);           
+
+            var thumbnail = new ThumbnailViewModel(uploadResult.SecureUrl.ToString(), uploadResult.PublicId);
+
+            return thumbnail;
         }
     }
 }

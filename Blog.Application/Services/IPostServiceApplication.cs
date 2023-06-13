@@ -2,6 +2,7 @@
 using Blog.Application.ViewModels;
 using Blog.Domain.Dtos;
 using Blog.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace Blog.Application.Services
 {
@@ -10,6 +11,7 @@ namespace Blog.Application.Services
         public Task CreateAsync(PostRequestDto dto);
         public Task<PaginationResponse<Post>> GetAllAsync(int currentPage, int quantityPerPage); 
         public Task DeleteOneAsync(Guid id);
+        public Task<ThumbnailViewModel> UploadImage(IFormFile image);
 
     }
 }
