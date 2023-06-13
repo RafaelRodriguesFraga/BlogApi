@@ -14,13 +14,14 @@ namespace Blog.Domain.Entities
     public class Post : BaseEntity
     {
 
-        public Post(string title, string content, string meta, string[] tags)
+        public Post(string title, string content, string meta, string[] tags, string thumbnail)
         {
             Title = title;
             Content = content;
             Meta = meta;
             Tags = tags;
             Slug = StringHelper.GenerateSlug(title);
+            Thumbnail = thumbnail;
         }
 
         public string Title { get; private set; }
@@ -28,51 +29,17 @@ namespace Blog.Domain.Entities
         public string Meta { get; private set; }
         public string[] Tags { get; private set; }
         public string Slug { get; set; }
-        public Thumbnail Thumbnail { get; private set; }
+        public string Thumbnail { get; private set; }
 
         public override void Validate()
         {
         }
 
-        private static Thumbnail UploadImage(IFormFile image)
-        {
-            var builder = new HostBuilder()
-                .ConfigureAppConfiguration((hostingContext, config) =>
-                {
-                    config.SetBasePath(Directory.GetCurrentDirectory());
-                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-                    config.AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true);
-                    config.AddEnvironmentVariables();
-                });
-
-            var host = builder.Build();
-
-            var configuration = host.Services.GetService<IConfiguration>();
-
-            Account account = new Account(
-                configuration.GetSection("CloudinarySettings:CloudName").Value,
-                configuration.GetSection("CloudinarySettings:ApiKey").Value,
-                configuration.GetSection("CloudinarySettings:ApiSecret").Value);
-
-            Cloudinary cloudinary = new Cloudinary(account);
-
-            //Fazer o upload da imagem
-            var uploadParams = new ImageUploadParams()
-            {
-                File = new FileDescription(image.FileName, image.OpenReadStream())
-            };
-
-            var uploadResult = cloudinary.Upload(uploadParams);
-
-            var thumbnail = new Thumbnail(uploadResult.SecureUrl.ToString(), uploadResult.PublicId);
-
-            return thumbnail;
-        }
+       
 
         public static implicit operator Post(PostRequestDto dto)
         {
-            var post = new Post(dto.Title, dto.Content, dto.Meta, dto.Tags);
-            post.Thumbnail = UploadImage(dto.Image);
+            var post = new Post(dto.Title, dto.Content, dto.Meta, dto.Tags, dto.Thumbnail);
 
             return post;
         }

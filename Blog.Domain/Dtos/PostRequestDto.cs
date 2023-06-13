@@ -11,7 +11,7 @@ namespace Blog.Domain.Dtos
         public string? Content { get; set; }
         public string? Meta { get; set; }
         public string[]? Tags { get; set; }
-        public IFormFile? Image { get; set; }
+        public string Thumbnail { get; set; }
 
         public override void Validate()
         {
