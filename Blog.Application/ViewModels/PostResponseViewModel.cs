@@ -15,12 +15,6 @@ namespace Blog.Application.ViewModels
         public string Meta { get; set; }
         public string[] Tags { get; set; }
         public string Slug { get; set; }
-        //public ThumbnailViewModel Thumbnail { get; set; }
-
-        //public static implicit operator Post(PostResponseViewModel viewModel)
-        //{
-        //    return new Post(viewModel.Title, viewModel.Content, viewModel.Meta, viewModel.Tags);
-        //}
-      
+           
     }
 }
