@@ -41,10 +41,6 @@ namespace Blog.Api.Controllers
             return ResponseOk(result);
         }
 
-
-
-
-
         [HttpGet]
         public async Task<IActionResult> GetAllAsync([FromQuery] int currentPage, [FromQuery] int quantityPerPage)
         {
