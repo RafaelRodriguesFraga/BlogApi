@@ -1,9 +1,4 @@
 ﻿using Blog.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Blog.Application.ViewModels
 {
@@ -15,6 +10,23 @@ namespace Blog.Application.ViewModels
         public string Meta { get; set; }
         public string[] Tags { get; set; }
         public string Slug { get; set; }
+        public string Thumbnail { get; set; }
+        public DateTime CreatedAt { get; set; }
+
+        public static implicit operator PostResponseViewModel (Post post)
+        {
+            return new PostResponseViewModel()
+            {
+                Id = post.Id,   
+                Title = post.Title,
+                Content = post.Content,
+                Meta = post.Meta,
+                Tags = post.Tags,
+                Slug = post.Slug,
+                Thumbnail = post.Thumbnail,
+                CreatedAt = post.CreatedAt
+            };
+        }
            
     }
 }
