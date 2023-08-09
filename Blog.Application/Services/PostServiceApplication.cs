@@ -79,5 +79,20 @@ namespace Blog.Application.Services
 
             return thumbnail;
         }
+
+        public async Task<PostResponseViewModel> GetBySlugAsync(string slug)
+        {
+            var post = await _postReadRepository.FindOneAsync(p => p.Slug == slug);
+
+            var postNotFound = post is null;
+            if(postNotFound)
+            {
+                _notificationContext.AddNotification("Error", "Post not found");
+                return default;
+            }
+
+            return post;
+
+        }
     }
 }

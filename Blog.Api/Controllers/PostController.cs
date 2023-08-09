@@ -49,6 +49,14 @@ namespace Blog.Api.Controllers
             return ResponseOk(result);
         }
 
+        [HttpGet("{slug}")]
+        public async Task<IActionResult> GetBySlugAsync([FromRoute] string slug)
+        {
+            var result = await _postServiceApplication.GetBySlugAsync(slug);
+
+            return ResponseOk(result);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync([FromRoute] Guid id)
         {
