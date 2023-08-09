@@ -10,7 +10,7 @@ namespace Blog.Domain.Dtos
         public string? Title { get; set; }
         public string? Content { get; set; }
         public string? Meta { get; set; }
-        public string[]? Tags { get; set; }
+        public string Tag { get; set; }
         public string Thumbnail { get; set; }
 
         public override void Validate()

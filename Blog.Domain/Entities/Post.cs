@@ -14,12 +14,12 @@ namespace Blog.Domain.Entities
     public class Post : BaseEntity
     {
 
-        public Post(string title, string content, string meta, string[] tags, string thumbnail)
+        public Post(string title, string content, string meta, string tag, string thumbnail)
         {
             Title = title;
             Content = content;
             Meta = meta;
-            Tags = tags;
+            Tag = tag;
             Slug = StringHelper.GenerateSlug(title);
             Thumbnail = thumbnail;
         }
@@ -27,7 +27,7 @@ namespace Blog.Domain.Entities
         public string Title { get; private set; }
         public string Content { get; private set; }
         public string Meta { get; private set; }
-        public string[] Tags { get; private set; }
+        public string Tag { get; private set; }
         public string Slug { get; set; }
         public string Thumbnail { get; private set; }
 
@@ -39,7 +39,7 @@ namespace Blog.Domain.Entities
 
         public static implicit operator Post(PostRequestDto dto)
         {
-            var post = new Post(dto.Title, dto.Content, dto.Meta, dto.Tags, dto.Thumbnail);
+            var post = new Post(dto.Title.Trim(), dto.Content.Trim(), dto.Meta.Trim(), dto.Tag, dto.Thumbnail);
 
             return post;
         }

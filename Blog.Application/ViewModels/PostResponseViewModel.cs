@@ -8,7 +8,7 @@ namespace Blog.Application.ViewModels
         public string Title { get; set; }
         public string Content { get; set; }
         public string Meta { get; set; }
-        public string[] Tags { get; set; }
+        public string Tag { get; set; }
         public string Slug { get; set; }
         public string Thumbnail { get; set; }
         public DateTime CreatedAt { get; set; }
@@ -21,7 +21,7 @@ namespace Blog.Application.ViewModels
                 Title = post.Title,
                 Content = post.Content,
                 Meta = post.Meta,
-                Tags = post.Tags,
+                Tag = post.Tag,
                 Slug = post.Slug,
                 Thumbnail = post.Thumbnail,
                 CreatedAt = post.CreatedAt
