@@ -69,7 +69,8 @@ namespace Blog.Infra.Repositories.Base
 
             var result = await collection
                 .Skip(skip)
-                .Limit(quantityPerPage)
+                .Limit(quantityPerPage)    
+                .SortByDescending(p => p.CreatedAt)
                 .ToListAsync();
 
             return (result, totalRecords);
