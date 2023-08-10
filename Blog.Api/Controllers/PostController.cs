@@ -57,6 +57,15 @@ namespace Blog.Api.Controllers
             return ResponseOk(result);
         }
 
+        [HttpGet("tag/{tag}")]
+        public async Task<IActionResult> GetAllByTagAsync([FromQuery] int currentPage, [FromQuery] int quantityPerPage, [FromRoute] string tag)
+        {
+            var result = await _postServiceApplication.GetAllByTagAsync(currentPage, quantityPerPage, tag);
+
+            return ResponseOk(result);
+        }
+
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync([FromRoute] Guid id)
         {

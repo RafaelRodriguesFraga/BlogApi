@@ -33,10 +33,10 @@ namespace Blog.Application.Services
 
 
         public async Task CreateAsync(PostRequestDto dto)
-        {         
-            
+        {
+
             await _writeRepository.InsertOneAsync(dto);
-        }       
+        }
 
         public async Task<PaginationResponse<Post>> GetAllAsync(int currentPage, int quantityPerPage)
         {
@@ -48,7 +48,7 @@ namespace Blog.Application.Services
         public async Task DeleteOneAsync(Guid id)
         {
             var post = await _postReadRepository.FindByIdAsync(id);
-            if(post is null)
+            if (post is null)
             {
                 _notificationContext.AddNotification("Error", "Post does not exist");
                 return;
@@ -63,7 +63,7 @@ namespace Blog.Application.Services
             var apiKey = _configuration.GetSection("CloudinarySettings:ApiKey").Value;
             var apiSecret = _configuration.GetSection("CloudinarySettings:ApiSecret").Value;
 
-            Account account = new Account(cloudName, apiKey, apiSecret);              
+            Account account = new Account(cloudName, apiKey, apiSecret);
 
             Cloudinary cloudinary = new Cloudinary(account);
 
@@ -73,7 +73,7 @@ namespace Blog.Application.Services
                 File = new FileDescription(image.FileName, image.OpenReadStream())
             };
 
-            var uploadResult = await cloudinary.UploadAsync(uploadParams);           
+            var uploadResult = await cloudinary.UploadAsync(uploadParams);
 
             var thumbnail = new ThumbnailViewModel(uploadResult.SecureUrl.ToString(), uploadResult.PublicId);
 
@@ -85,7 +85,7 @@ namespace Blog.Application.Services
             var post = await _postReadRepository.FindOneAsync(p => p.Slug == slug);
 
             var postNotFound = post is null;
-            if(postNotFound)
+            if (postNotFound)
             {
                 _notificationContext.AddNotification("Error", "Post not found");
                 return default;
@@ -94,5 +94,15 @@ namespace Blog.Application.Services
             return post;
 
         }
+
+        public async Task<PaginationResponse<Post>> GetAllByTagAsync(int currentPage, int quantityPerPage, string tag)
+        {
+            var (posts, totalRecords) = await _postReadRepository.FindAllPaginatedAsync(currentPage, quantityPerPage, p => p.Tag == tag);
+
+            return new PaginationResponse<Post>(currentPage, quantityPerPage, totalRecords, posts);
+
+        }
+
+
     }
 }
