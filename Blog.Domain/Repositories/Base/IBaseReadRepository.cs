@@ -14,5 +14,6 @@ namespace Blog.Domain.Repositories.Base
         IEnumerable<TEntity> FindAll();
         Task<IEnumerable<TEntity>> FindAllAsync();
         Task<(IEnumerable<TEntity> result, int totalRecords)> FindAllPaginatedAsync(int page, int quantityPerPage);
+        Task<(IEnumerable<TEntity> result, int totalRecords)> FindAllPaginatedAsync(int page, int quantityPerPage, Expression<Func<TEntity, bool>> filterExpression);
     }
 }

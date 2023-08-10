@@ -76,6 +76,25 @@ namespace Blog.Infra.Repositories.Base
             return (result, totalRecords);
 
         }
+
+        public async Task<(IEnumerable<TEntity> result, int totalRecords)> FindAllPaginatedAsync(int page, int quantityPerPage, Expression<Func<TEntity, bool>> filterExpression)
+        {
+            var skip = page == 1 ? 0 : (page - 1) * quantityPerPage;
+
+            var collection = _collection
+                 .Find(filterExpression);
+
+            var totalRecords = (int)collection.Count();
+
+            var result = await collection
+                .Skip(skip)
+                .Limit(quantityPerPage)
+                .SortByDescending(p => p.CreatedAt)
+                .ToListAsync();
+
+            return (result, totalRecords);
+
+        }
         public IEnumerable<TEntity> FindAll()
 
         {
