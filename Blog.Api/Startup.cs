@@ -1,4 +1,5 @@
 ﻿using Blog.Api.Responses;
+using Blog.Application.Mappers;
 using Blog.Application.Pagination;
 using Blog.Domain.Notifications;
 using Blog.Infra.CrossCutting.IoC;
@@ -23,23 +24,30 @@ namespace Blog.Api
 
                 x.IncludeXmlComments(xmlPath);
             });
-            //var allowedOrigins = Configuration.GetSection("AllowedOrigins").Value;
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy("ClientPermission", policy =>
-            //    {
-            //        policy
-            //        .AllowAnyHeader()
-            //        .AllowAnyMethod()
-            //        .WithOrigins(allowedOrigins.Split(";"))
-            //        .AllowCredentials();
-            //    });
-            //});            
+            var allowedOrigins = Configuration.GetSection("AllowedOrigins").Value;
+           
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            if(environment == "DEVELOPMENT")
+            {
+                services.AddCors(options =>
+                {
+                    options.AddPolicy("ClientPermission", policy =>
+                    {
+                        policy
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .WithOrigins(allowedOrigins.Split(";"))
+                        .AllowCredentials();
+                    });
+                });
+            }          
 
             services.AddMongoDb(Configuration);
             services.AddControllers();
             services.AddRepositories();
             services.AddServices();
+            services.AddAutoMapper(typeof(Startup));
+            
 
             services.AddScoped<IResponseFactory, ResponseFactory>();
             services.AddScoped<NotificationContext>();
@@ -56,9 +64,9 @@ namespace Blog.Api
             if (app.Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseCors("ClientPermission");
             }
        
-            app.UseCors("ClientPermission");
             app.UseRouting();
             app.UseAuthorization();
             app.MapControllers();
