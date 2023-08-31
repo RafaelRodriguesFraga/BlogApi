@@ -65,6 +65,13 @@ namespace Blog.Api.Controllers
             return ResponseOk(result);
         }
 
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchByTitleAsync([FromQuery] string title)
+        {
+            var result = await _postServiceApplication.SearchByTitleAsync(title);
+
+            return ResponseOk(result);
+        }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync([FromRoute] Guid id)

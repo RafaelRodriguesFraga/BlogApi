@@ -5,5 +5,6 @@ namespace Blog.Domain.Repositories
 {
     public interface IPostReadRepository : IBaseReadRepository<Post>
     {
+        Task<IEnumerable<Post>> SearchByTitleAsync(string title);
     }
 }

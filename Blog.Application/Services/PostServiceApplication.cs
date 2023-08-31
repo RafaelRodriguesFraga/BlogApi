@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using AutoMapper;
 
 namespace Blog.Application.Services
 {
@@ -20,15 +21,18 @@ namespace Blog.Application.Services
         private readonly IPostWriteRepository _writeRepository;
         private readonly IPostReadRepository _postReadRepository;
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
         public PostServiceApplication(
             NotificationContext notificationContext,
             IPostWriteRepository writeRepository,
             IPostReadRepository postReadRepository,
-            IConfiguration configuration) : base(notificationContext)
+            IConfiguration configuration,
+            IMapper mapper) : base(notificationContext)
         {
             _writeRepository = writeRepository;
             _postReadRepository = postReadRepository;
             _configuration = configuration;
+            _mapper = mapper;
         }
 
 
@@ -103,6 +107,13 @@ namespace Blog.Application.Services
 
         }
 
+        public async Task<IEnumerable<PostResponseViewModel>> SearchByTitleAsync(string title)
+        {
+            var posts = await _postReadRepository.SearchByTitleAsync(title);
 
+            var postsMapped = _mapper.Map<IEnumerable<PostResponseViewModel>>(posts);
+
+            return postsMapped;
+        }
     }
 }
