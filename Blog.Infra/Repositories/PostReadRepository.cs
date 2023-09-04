@@ -1,10 +1,10 @@
 ﻿using Blog.Domain.Entities;
 using Blog.Domain.Repositories;
-using Blog.Infra.DbSettings;
-using Blog.Infra.Repositories.Base;
+using DotnetBoilerplate.Components.Infra.MongoDb.DbSettings;
+using DotnetBoilerplate.Components.Infra.MongoDb.Repositories.Base;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System.Text.RegularExpressions;
+using System.Linq.Expressions;
 
 namespace Blog.Infra.Repositories
 {
@@ -22,6 +22,47 @@ namespace Blog.Infra.Repositories
 
             return result;
         }
+
+        public async Task<(IEnumerable<Post> result, int totalRecords)> FindAllPaginatedAsync(int page, int quantityPerPage)
+        {
+            var skip = page == 1 ? 0 : (page - 1) * quantityPerPage;
+
+            var filter = Builders<Post>.Filter.Empty;
+
+            var collection = _collection
+                 .Find(filter);
+
+            var totalRecords = (int)collection.Count();
+
+            var result = await collection
+                .Skip(skip)
+                .Limit(quantityPerPage)
+                .SortByDescending(p => p.CreatedAt)
+                .ToListAsync();
+
+            return (result, totalRecords);
+
+        }
+
+        public async Task<(IEnumerable<Post> result, int totalRecords)> FindAllPaginatedAsync(
+            int page,
+            int quantityPerPage, 
+            Expression<Func<Post, bool>> filterExpression)
+        {
+            var skip = page == 1 ? 0 : (page - 1) * quantityPerPage;
+
+            var collection = _collection.Find(filterExpression);
+
+            var totalRecords = (int)collection.Count();
+
+            var result = await collection
+                     .Skip(skip)
+                     .Limit(quantityPerPage)
+                     .SortByDescending(p => p.CreatedAt)
+                     .ToListAsync();
+
+            return (result, totalRecords);
+        }        
     }
 }
 

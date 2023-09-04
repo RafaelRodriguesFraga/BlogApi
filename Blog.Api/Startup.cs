@@ -1,8 +1,6 @@
-﻿using Blog.Api.Responses;
-using Blog.Application.Mappers;
-using Blog.Application.Pagination;
-using Blog.Domain.Notifications;
-using Blog.Infra.CrossCutting.IoC;
+﻿using Blog.Infra.CrossCutting.IoC;
+using DotnetBoilerplate.Components.Api;
+using DotnetBoilerplate.Components.Application;
 using System.Reflection;
 
 namespace Blog.Api
@@ -27,7 +25,7 @@ namespace Blog.Api
             var allowedOrigins = Configuration.GetSection("AllowedOrigins").Value;
            
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            if(environment == "DEVELOPMENT")
+            if(environment == "Development")
             {
                 services.AddCors(options =>
                 {
@@ -40,18 +38,17 @@ namespace Blog.Api
                         .AllowCredentials();
                     });
                 });
-            }          
+            }
+            services.AddControllers();
+
+            // Boilerplate Dependencies
+            services.AddApi();
+            services.AddApplication();
 
             services.AddMongoDb(Configuration);
-            services.AddControllers();
             services.AddRepositories();
             services.AddServices();
-            services.AddAutoMapper(typeof(Startup));
-            
-
-            services.AddScoped<IResponseFactory, ResponseFactory>();
-            services.AddScoped<NotificationContext>();
-            services.AddScoped(typeof(IPaginationResponse<>), typeof(PaginationResponse<>));
+            services.AddAutoMapper(typeof(Startup));      
         }
 
         public void Configure(WebApplication app, IWebHostEnvironment environment)

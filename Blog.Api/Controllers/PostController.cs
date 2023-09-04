@@ -1,8 +1,8 @@
-﻿using Blog.Api.Base;
-using Blog.Api.Responses;
-using Blog.Application.Services;
+﻿using Blog.Application.Services;
 using Blog.Application.ViewModels;
 using Blog.Domain.Dtos;
+using DotnetBoilerplate.Components.Api.Base;
+using DotnetBoilerplate.Components.Api.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Api.Controllers

@@ -1,13 +1,6 @@
 ﻿using Blog.Domain.Dtos;
-using Blog.Domain.Notifications;
 using Blog.Shared;
-using CloudinaryDotNet.Actions;
-using CloudinaryDotNet;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using Pe2Api.Domain.Entities.Base;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;
+using DotnetBoilerplate.Components.Domain.MongoDb.Entities.Base;
 
 namespace Blog.Domain.Entities
 {

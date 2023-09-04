@@ -1,4 +1,4 @@
-﻿using Blog.Domain.Notifications;
+﻿using DotnetBoilerplate.Components.Shared.Notifications;
 using FluentValidation.Results;
 
 namespace Blog.Domain.Dtos.Base

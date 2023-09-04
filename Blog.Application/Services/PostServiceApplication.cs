@@ -1,18 +1,15 @@
-﻿
-using Blog.Application.Pagination;
-using Blog.Application.Services.Base;
-using Blog.Application.ViewModels;
+﻿using Blog.Application.ViewModels;
 using Blog.Domain.Dtos;
 using Blog.Domain.Entities;
-using Blog.Domain.Notifications;
 using Blog.Domain.Repositories;
 using CloudinaryDotNet.Actions;
 using CloudinaryDotNet;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
+using DotnetBoilerplate.Components.Application.Base;
+using DotnetBoilerplate.Components.Shared.Notifications;
+using DotnetBoilerplate.Components.Application.Pagination;
 
 namespace Blog.Application.Services
 {
@@ -22,19 +19,14 @@ namespace Blog.Application.Services
         private readonly IPostReadRepository _postReadRepository;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
-        public PostServiceApplication(
-            NotificationContext notificationContext,
-            IPostWriteRepository writeRepository,
-            IPostReadRepository postReadRepository,
-            IConfiguration configuration,
-            IMapper mapper) : base(notificationContext)
+
+        public PostServiceApplication(NotificationContext notificationContext, IPostWriteRepository writeRepository, IPostReadRepository postReadRepository, IConfiguration configuration, IMapper mapper) : base(notificationContext)
         {
             _writeRepository = writeRepository;
             _postReadRepository = postReadRepository;
             _configuration = configuration;
             _mapper = mapper;
         }
-
 
         public async Task CreateAsync(PostRequestDto dto)
         {
@@ -46,7 +38,7 @@ namespace Blog.Application.Services
         {
             var (posts, totalRecords) = await _postReadRepository.FindAllPaginatedAsync(currentPage, quantityPerPage);
 
-            return new PaginationResponse<Post>(currentPage, quantityPerPage, totalRecords, posts);
+            return new PaginationResponse<Post>(posts, currentPage, quantityPerPage, totalRecords);
         }
 
         public async Task DeleteOneAsync(Guid id)
@@ -103,7 +95,7 @@ namespace Blog.Application.Services
         {
             var (posts, totalRecords) = await _postReadRepository.FindAllPaginatedAsync(currentPage, quantityPerPage, p => p.Tag == tag);
 
-            return new PaginationResponse<Post>(currentPage, quantityPerPage, totalRecords, posts);
+            return new PaginationResponse<Post>(posts, currentPage, quantityPerPage, totalRecords);
 
         }
 

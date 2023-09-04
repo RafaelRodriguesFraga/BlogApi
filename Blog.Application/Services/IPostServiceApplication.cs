@@ -1,7 +1,7 @@
-﻿using Blog.Application.Pagination;
-using Blog.Application.ViewModels;
+﻿using Blog.Application.ViewModels;
 using Blog.Domain.Dtos;
 using Blog.Domain.Entities;
+using DotnetBoilerplate.Components.Application.Pagination;
 using Microsoft.AspNetCore.Http;
 
 namespace Blog.Application.Services
