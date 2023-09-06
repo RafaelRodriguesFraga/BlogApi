@@ -38,7 +38,7 @@ namespace Blog.Application.Services
         {
             var (posts, totalRecords) = await _postReadRepository.FindAllPaginatedAsync(currentPage, quantityPerPage);
 
-            return new PaginationResponse<Post>(posts, currentPage, quantityPerPage, totalRecords);
+            return new PaginationResponse<Post>(currentPage, quantityPerPage, totalRecords, posts);
         }
 
         public async Task DeleteOneAsync(Guid id)
@@ -95,7 +95,7 @@ namespace Blog.Application.Services
         {
             var (posts, totalRecords) = await _postReadRepository.FindAllPaginatedAsync(currentPage, quantityPerPage, p => p.Tag == tag);
 
-            return new PaginationResponse<Post>(posts, currentPage, quantityPerPage, totalRecords);
+            return new PaginationResponse<Post>(currentPage, quantityPerPage, totalRecords, posts);
 
         }
 
