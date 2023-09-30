@@ -62,7 +62,19 @@ namespace Blog.Infra.Repositories
                      .ToListAsync();
 
             return (result, totalRecords);
-        }        
+        }
+
+        public async Task<IEnumerable<Post>> GetRelatedPostsAsync(Guid id, string tag)
+        {
+
+            var collection = await _collection
+                 .Find(p => p.Tag == tag && p.Id != id)
+                 .SortByDescending(p => p.CreatedAt)
+                 .Limit(5)
+                 .ToListAsync();
+
+            return collection;
+        }
     }
 }
 

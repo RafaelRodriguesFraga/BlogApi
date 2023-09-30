@@ -9,5 +9,6 @@ namespace Blog.Domain.Repositories
         Task<(IEnumerable<Post> result, int totalRecords)> FindAllPaginatedAsync(int page, int quantityPerPage);
         Task<(IEnumerable<Post> result, int totalRecords)> FindAllPaginatedAsync(int currentPage, int quantityPerPage, Expression<Func<Post, bool>> filterExpression);
         Task<IEnumerable<Post>> SearchByTitleAsync(string title);
+        Task<IEnumerable<Post>> GetRelatedPostsAsync(Guid id, string tag);
     }
 }
