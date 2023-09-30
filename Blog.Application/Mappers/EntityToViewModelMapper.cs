@@ -8,10 +8,7 @@ namespace Blog.Application.Mappers
     {
         public EntityToViewModelMapper()
         {
-            CreateMap<IEnumerable<Post>, IEnumerable<PostResponseViewModel>>();
-            CreateMap<IEnumerable<Post>, IEnumerable<RelatedPostViewModel>>();
-              
+            CreateMap<IEnumerable<Post>, IEnumerable<PostResponseViewModel>>();              
         }
-
     }
 }
