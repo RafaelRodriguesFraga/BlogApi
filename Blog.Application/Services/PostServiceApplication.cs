@@ -115,6 +115,6 @@ namespace Blog.Application.Services
             var postsMapped = _mapper.Map<IEnumerable<RelatedPostViewModel>>(posts);
 
             return postsMapped;
-        ''}
+        }
     }
 }
