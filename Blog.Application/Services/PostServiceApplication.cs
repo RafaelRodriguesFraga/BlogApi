@@ -108,11 +108,11 @@ namespace Blog.Application.Services
             return postsMapped;
         }
 
-        public async Task<IEnumerable<RelatedPostViewModel>> GetRelatedPostsAsync(Guid id, string tag)
+        public async Task<IEnumerable<PostResponseViewModel>> GetRelatedPostsAsync(Guid id, string tag)
         {
             var posts = await _postReadRepository.GetRelatedPostsAsync(id, tag);
 
-            var postsMapped = _mapper.Map<IEnumerable<RelatedPostViewModel>>(posts);
+            var postsMapped = _mapper.Map<IEnumerable<PostResponseViewModel>>(posts);
 
             return postsMapped;
         }
