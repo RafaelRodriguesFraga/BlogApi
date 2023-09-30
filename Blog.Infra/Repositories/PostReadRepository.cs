@@ -70,7 +70,7 @@ namespace Blog.Infra.Repositories
             var collection = await _collection
                  .Find(p => p.Tag == tag && p.Id != id)
                  .SortByDescending(p => p.CreatedAt)
-                 .Limit(5)
+                 .Limit(3)
                  .ToListAsync();
 
             return collection;
