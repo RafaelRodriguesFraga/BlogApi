@@ -64,11 +64,11 @@ namespace Blog.Infra.Repositories
             return (result, totalRecords);
         }
 
-        public async Task<IEnumerable<Post>> GetRelatedPostsAsync(Guid id, string tag)
+        public async Task<IEnumerable<Post>> GetRelatedPostsAsync(string slug)
         {
 
             var collection = await _collection
-                 .Find(p => p.Tag == tag && p.Id != id)
+                 .Find(p => p.Slug != slug)
                  .SortByDescending(p => p.CreatedAt)
                  .Limit(3)
                  .ToListAsync();

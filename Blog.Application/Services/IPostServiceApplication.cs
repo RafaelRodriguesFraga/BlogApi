@@ -15,7 +15,7 @@ namespace Blog.Application.Services
         public Task<IEnumerable<PostResponseViewModel>> SearchByTitleAsync(string title);
         public Task DeleteOneAsync(Guid id);
         public Task<ThumbnailViewModel> UploadImage(IFormFile image);
-        public Task<IEnumerable<PostResponseViewModel>> GetRelatedPostsAsync(Guid id, string tag);
+        public Task<IEnumerable<PostResponseViewModel>> GetRelatedPostsAsync(string slug);
 
 
     }

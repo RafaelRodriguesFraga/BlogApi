@@ -73,10 +73,10 @@ namespace Blog.Api.Controllers
             return ResponseOk(result);
         }
 
-        [HttpGet("{id}/tag/{tag}/related")]
-        public async Task<IActionResult> GetRelatedAsync([FromRoute] Guid id, [FromRoute] string tag)
+        [HttpGet("{slug}/related")]
+        public async Task<IActionResult> GetRelatedAsync([FromRoute] string slug)
         {
-            var result = await _postServiceApplication.GetRelatedPostsAsync(id, tag);
+            var result = await _postServiceApplication.GetRelatedPostsAsync(slug);
 
             return ResponseOk(result);
         }
